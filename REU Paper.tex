@@ -1,0 +1,505 @@
+
+\documentclass[openany, amssymb, psamsfonts]{amsart}
+\usepackage{mathrsfs,comment}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[normalem]{ulem}
+\usepackage{url}
+\usepackage[all,arc,2cell]{xy}
+\UseAllTwocells
+\usepackage{enumerate}
+%%% hyperref stuff is taken from AGT style file
+\usepackage{hyperref}  
+\hypersetup{%
+  bookmarksnumbered=true,%
+  bookmarks=true,%
+  colorlinks=true,%
+  linkcolor=blue,%
+  citecolor=blue,%
+  filecolor=blue,%
+  menucolor=blue,%
+  pagecolor=blue,%
+  urlcolor=blue,%
+  pdfnewwindow=true,%
+  pdfstartview=FitBH}   
+  
+\let\fullref\autoref
+%
+%  \autoref is very crude.  It uses counters to distinguish environments
+%  so that if say {lemma} uses the {theorem} counter, then autrorefs
+%  which should come out Lemma X.Y in fact come out Theorem X.Y.  To
+%  correct this give each its own counter eg:
+%                 \newtheorem{theorem}{Theorem}[section]
+%                 \newtheorem{lemma}{Lemma}[section]
+%  and then equate the counters by commands like:
+%                 \makeatletter
+%                   \let\c@lemma\c@theorem
+%                  \makeatother
+%
+%  To work correctly the environment name must have a corrresponding 
+%  \XXXautorefname defined.  The following command does the job:
+%
+\def\makeautorefname#1#2{\expandafter\def\csname#1autorefname\endcsname{#2}}
+%
+%  Some standard autorefnames.  If the environment name for an autoref 
+%  you need is not listed below, add a similar line to your TeX file:
+%  
+%\makeautorefname{equation}{Equation}%
+\def\equationautorefname~#1\null{(#1)\null}
+\makeautorefname{footnote}{footnote}%
+\makeautorefname{item}{item}%
+\makeautorefname{figure}{Figure}%
+\makeautorefname{table}{Table}%
+\makeautorefname{part}{Part}%
+\makeautorefname{appendix}{Appendix}%
+\makeautorefname{chapter}{Chapter}%
+\makeautorefname{section}{Section}%
+\makeautorefname{subsection}{Section}%
+\makeautorefname{subsubsection}{Section}%
+\makeautorefname{theorem}{Theorem}%
+\makeautorefname{thm}{Theorem}%
+\makeautorefname{cor}{Corollary}%
+\makeautorefname{lem}{Lemma}%
+\makeautorefname{prop}{Proposition}%
+\makeautorefname{pro}{Property}
+\makeautorefname{conj}{Conjecture}%
+\makeautorefname{defn}{Definition}%
+\makeautorefname{notn}{Notation}
+\makeautorefname{notns}{Notations}
+\makeautorefname{rem}{Remark}%
+\makeautorefname{quest}{Question}%
+\makeautorefname{exmp}{Example}%
+\makeautorefname{ax}{Axiom}%
+\makeautorefname{claim}{Claim}%
+\makeautorefname{ass}{Assumption}%
+\makeautorefname{asss}{Assumptions}%
+\makeautorefname{con}{Construction}%
+\makeautorefname{prob}{Problem}%
+\makeautorefname{warn}{Warning}%
+\makeautorefname{obs}{Observation}%
+\makeautorefname{conv}{Convention}%
+
+
+%
+%                  *** End of hyperref stuff ***
+
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}{Corollary}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{prob}{Problem}[section]
+\newtheorem{conj}{Conjecture}[section]
+%\newtheorem{ass}{Assumption}[section]
+%\newtheorem{asses}{Assumptions}[section]
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{ass}{Assumption}[section]
+\newtheorem{asss}{Assumptions}[section]
+\newtheorem{ax}{Axiom}[section]
+\newtheorem{con}{Construction}[section]
+\newtheorem{exmp}{Example}[section]
+\newtheorem{notn}{Notation}[section]
+\newtheorem{notns}{Notations}[section]
+\newtheorem{pro}{Property}[section]
+\newtheorem{quest}{Question}[section]
+\newtheorem{rem}{Remark}[section]
+\newtheorem{warn}{Warning}[section]
+\newtheorem{sch}{Scholium}[section]
+\newtheorem{obs}{Observation}[section]
+\newtheorem{conv}{Convention}[section]
+
+%%%% hack to get fullref working correctly
+\makeatletter
+\let\c@obs=\c@thm
+\let\c@cor=\c@thm
+\let\c@prop=\c@thm
+\let\c@lem=\c@thm
+\let\c@prob=\c@thm
+\let\c@con=\c@thm
+\let\c@conj=\c@thm
+\let\c@defn=\c@thm
+\let\c@notn=\c@thm
+\let\c@notns=\c@thm
+\let\c@exmp=\c@thm
+\let\c@ax=\c@thm
+\let\c@pro=\c@thm
+\let\c@ass=\c@thm
+\let\c@warn=\c@thm
+\let\c@rem=\c@thm
+\let\c@sch=\c@thm
+\let\c@equation\c@thm
+\numberwithin{equation}{section}
+
+\newcommand{\bA}{\mathbf{A}}
+\newcommand{\bB}{\mathbf{B}}
+\newcommand{\bC}{\mathbf{C}}
+\newcommand{\bD}{\mathbf{D}}
+\newcommand{\bE}{\mathbf{E}}
+\newcommand{\bF}{\mathbf{F}}
+\newcommand{\bG}{\mathbf{G}}
+\newcommand{\bH}{\mathbf{H}}
+\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bJ}{\mathbf{J}}
+\newcommand{\bK}{\mathbf{K}}
+\newcommand{\bL}{\mathbf{L}}
+\newcommand{\bM}{\mathbf{M}}
+\newcommand{\bN}{\mathbf{N}}
+\newcommand{\bO}{\mathbf{O}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\bQ}{\mathbf{Q}}
+\newcommand{\bR}{\mathbf{R}}
+\newcommand{\bS}{\mathbf{S}}
+\newcommand{\bT}{\mathbf{T}}
+\newcommand{\bU}{\mathbf{U}}
+\newcommand{\bV}{\mathbf{V}}
+\newcommand{\bW}{\mathbf{W}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bY}{\mathbf{Y}}
+\newcommand{\bZ}{\mathbf{Z}}
+
+%% blackboard bold math capitals
+\newcommand{\bbA}{\mathbb{A}}
+\newcommand{\bbB}{\mathbb{B}}
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbD}{\mathbb{D}}
+\newcommand{\bbE}{\mathbb{E}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbG}{\mathbb{G}}
+\newcommand{\bbH}{\mathbb{H}}
+\newcommand{\bbI}{\mathbb{I}}
+\newcommand{\bbJ}{\mathbb{J}}
+\newcommand{\bbK}{\mathbb{K}}
+\newcommand{\bbL}{\mathbb{L}}
+\newcommand{\bbM}{\mathbb{M}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbO}{\mathbb{O}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbS}{\mathbb{S}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbU}{\mathbb{U}}
+\newcommand{\bbV}{\mathbb{V}}
+\newcommand{\bbW}{\mathbb{W}}
+\newcommand{\bbX}{\mathbb{X}}
+\newcommand{\bbY}{\mathbb{Y}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+%% script math capitals
+\newcommand{\sA}{\mathscr{A}}
+\newcommand{\sB}{\mathscr{B}}
+\newcommand{\sC}{\mathscr{C}}
+\newcommand{\sD}{\mathscr{D}}
+\newcommand{\sE}{\mathscr{E}}
+\newcommand{\sF}{\mathscr{F}}
+\newcommand{\sG}{\mathscr{G}}
+\newcommand{\sH}{\mathscr{H}}
+\newcommand{\sI}{\mathscr{I}}
+\newcommand{\sJ}{\mathscr{J}}
+\newcommand{\sK}{\mathscr{K}}
+\newcommand{\sL}{\mathscr{L}}
+\newcommand{\sM}{\mathscr{M}}
+\newcommand{\sN}{\mathscr{N}}
+\newcommand{\sO}{\mathscr{O}}
+\newcommand{\sP}{\mathscr{P}}
+\newcommand{\sQ}{\mathscr{Q}}
+\newcommand{\sR}{\mathscr{R}}
+\newcommand{\sS}{\mathscr{S}}
+\newcommand{\sT}{\mathscr{T}}
+\newcommand{\sU}{\mathscr{U}}
+\newcommand{\sV}{\mathscr{V}}
+\newcommand{\sW}{\mathscr{W}}
+\newcommand{\sX}{\mathscr{X}}
+\newcommand{\sY}{\mathscr{Y}}
+\newcommand{\sZ}{\mathscr{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Var}{\text{Var}}
+
+\renewcommand{\emptyset}{\O}
+
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\sm}{\setminus}
+
+
+\newcommand{\sarr}{\rightarrow}
+\newcommand{\arr}{\longrightarrow}
+
+\makeatother
+
+\bibliographystyle{plain}
+
+%--------Meta Data: Fill in your info------
+\title{Working Title}
+
+\author{AgustÍn Esteva}
+
+\date{AUGUST 28, 2024}
+
+\begin{document}
+
+\begin{abstract}
+
+This expository paper develops the theory behind stochastic calculus, with an emphasis placed on a measure-theoretic derivation of the Black-Scholes-Merton equation. 
+The paper includes proofs for the existence of Brownian motion, as well as some of its properties, Martingale properties, the Girsanov Theorem, the Ito-Doeblin formula, and the BSM equation. 
+\end{abstract}
+
+\maketitle
+
+\tableofcontents
+\section{Introduction}
+A \textit{stochastic process} is a sequence of random variables who's values are revealed through time. The 
+
+\subsection{Definitions}
+For the entirety of the paper, we adopt the following conventions: capital letters, such as $X,Y,Z,$ are random variables; 
+\begin{defn}
+A \textit{$\sigma-$algebra} $\mathcal{F}$ is a collection of subsets of $X$ such that
+\begin{enumerate}
+    \item $\emptyset \in \mathcal{F};$
+    \item If $E \in \mathcal{F},$ then $E^c\in \mathcal{F};$
+    \item If $E_1, E_2, \dots$ are countable, then $\displaystyle\bigcup_{i=1}^\infty E_i$ are in $\mathcal{F}.$
+\end{enumerate}
+\end{defn}
+
+\begin{defn}
+A \textit{measure} on $(X, \mathcal{F})$ is a function $\mu: \mathcal{F}\to [0,\infty)$ such that:
+\begin{enumerate}
+    \item $\mu(\emptyset) = 0.$
+    \item If $E_1, E_2, \dots$ are countable and pairwise disjoint, then 
+    \[\mu(\bigcup_{i=1}^\infty E_i) = \sum_{i=1}^\infty \mu(E_i)\]
+\end{enumerate}
+\end{defn}
+We define a \textit{probability measure} $\bbP$ as a measure on a sample space $\Omega$ of outcomes with the added condition that $\bbP(\Omega) =1.$
+
+\begin{defn}
+A \textit{probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ is a triple where $\Omega,$ an arbitrary set, $\mathcal{F}$ is a $\sigma-$algebra of $\Omega$ containing events, and $\mathbb{P}$ is the probability measure on $(\Omega, \mathcal{F}).$
+\end{defn}
+For the rest of the paper, it is understood, but not always stated, that we are always acting within a probability space. 
+
+\begin{defn}
+A \textit{filtration} $\{\mathcal{F}_t\}_{t\in \mathbb{T}}$ of $(\Omega, \mathcal{F}),$ where $\mathbb{T}$ is the time index set, is a sequence of $\sigma-$algebras, $\mathcal{F}_t\subseteq \mathcal{F}$ such that if $s<t,$ then $\mathcal{F}_t\subseteq \mathcal{F}.$
+\end{defn}
+
+
+Thus, we think of a filtration as an increasing sequence of the information contained in the random variables. 
+
+\begin{defn}We say a process $X_t$ is \textit{adapted} to a filtration $\{\mathcal{F}_t\}_{t\in \bbT}$ if $X_t$ is $\mathcal{F}_t-$measurable for each $t.$
+\end{defn}
+
+\begin{defn}A measure $\nu$ is said to be \textit{absolutely continuous} with respect to a measure if whenever $\mu(E) = 0,$ then $\nu(E) =0.$ We write this as $\nu\ll\mu.$
+\end{defn}
+
+\begin{defn}
+Stopping time.
+\end{defn}
+
+\begin{lem}
+(Chebyshev's Inequality) If $1\leq p < \infty,$ then for any $\lambda>0,$ we have that
+\[\bbP\{|X|\geq \lambda\}\leq \frac{\bbE[|X|^p]}{\lambda^p}\]
+\end{lem}
+\begin{proof} %IIT
+Define $A := \{\omega \in \Omega  ; |X(\omega)|\geq \lambda\},$ then 
+\[\bbE[|X|^p] = \int_\Omega |X|^p \dd \bbP \geq \int_A |X|^p\geq \lambda^p \int_A\dd \bbP = \bbP\{A\}\]
+\end{proof}
+
+For the Borel-Cantelli lemma, we first need a definition.
+\begin{defn}
+Suppose we have $(\Omega, \mathcal{F}, \bbP)$ as our probability space, and $\{A_n\}$ is a sequence of events where $A_n \in \mathcal{F}$ for all $n.$ We define $(A_n$ i.o$),$  or, \textit{$A_n$ infinitely often}, by
+\[(A_n\; \text{i.o.}) = \bigcap_{n=1}^\infty\bigcup_{i=n}^\infty A_i - \{\omega \in \Omega | \omega \; \text{belongs to infinitely many $A_n$}\}\]
+\end{defn}
+
+\begin{lem}
+(Borel-Cantelli)
+Let $\{A_n\}$ be a sequence of events. If $\displaystyle\sum_{i=1}^\infty A_i<\infty,$ then $\bbP\{(A_n \; \text{i.o.})\} = 0.$
+\end{lem}
+
+\begin{proof}
+Since $(A_n \; \text{i.o.}) \subseteq \displaystyle\sum_{i=n}^\infty A_i,$ we have that
+\[\bbP\{(A_n \; \text{i.o.})\} \leq \lim\limits_{n\to \infty}\bbP\{\bigcup_{i=n}^n A_i\}\leq \lim\limits_{n\to \infty}\sum_{i=n}^n \bbP\{A_i\},\] where, as $n\to \infty,$ we have that $\displaystyle\lim\limits_{n\to \infty}\displaystyle\sum_{i=n}^n \bbP\{A_i\}\to 0 \; (\text{a.s.}).$
+\end{proof}
+
+
+
+
+\subsection{The Radon-Nikodym Theorem} %all
+We now introduce a tool which allows us to compare measures.  
+\begin{thm}
+Suppose $\mu$ and $\nu$ are measures on $(\Omega, \mathcal{F})$ such that
+\[\Omega = \bigcup_{n=1}^\infty A_n, \qquad \text{with} \qquad \mu(A_n), \nu(A_n) < \infty \quad \forall n.\] Then there exists a unique $\mu-$integrable non-negative function $f$ which is measurable with respect to $\mathcal{F}$ such that for every $E\in \mathcal{F},$
+\[\nu(E) = \int_E f\mathrm{d}u\]
+\end{thm}
+
+The function $f$ is called the \textit{Radon-Nikodym derivative} of $\nu$ with respect to $\mu$ and is written $\mathrm{d}\nu = f\mathrm{d}\mu$
+
+\begin{exmp}%finbook
+Let $(\Omega, \mathcal{F}, \bbP)$ be a probability space, and suppose $Q$ is a probability measure with $Q\ll P,$ then the Radon-Nikodym derivative 
+\[X = \frac{\dd Q}{\dd P}\]
+is a nonnegative random variable with $\bbE[X] =1$ satisfying 
+\[Q(E) = \bbE_\bbP[ \textbf{1}_E X] \qquad \Leftrightarrow \qquad \dd Q(E) = \int_E X \dd \bbP.\]
+\end{exmp}
+
+\begin{defn} %bass
+Suppose $(\Omega, \mathcal{F}, \bbP)$ is a probability space and $\mathcal{G}\subset \mathcal{F}.$ We define the \textit{conditional expectation} of $X$ given $\mathcal{G}$ as
+\[\bbE[X | \mathcal{G}] =\frac{\dd Q}{\dd\bbP|_\mathcal{G}}\]
+\end{defn}
+
+It takes little work to show that this definition satisfies the usual definition of conditional expectation.\newline\newline
+Consider a fair gambling game, where the expected winnings in the future games is $\$0,$ regardless of the games already played. Mathematically, we can express this as
+\[\bbE[M_n - M_m | \mathcal{F}_m] = 0\]
+This fair game is an instance of a martingale.
+
+\begin{defn} %hardbook
+Let $\bbT = \bbN.$ We say that a real-valued stochastic process $\{M_m\}_{m\in \bbT}$ is a \textit{martingale} with respect the the filtration $\{\mathcal{F}_m\}_{m\in \bbT}$:
+\begin{enumerate}
+    \item $\bbE[|M_m|]< \infty$ for each $n;$
+    \item $\{M_m\}_{m\in \bbT}$ is adapted to $\{\mathcal{F}_m\}_{m\in \bbT};$
+    \item $M_m  = \bbE[M_n | \mathcal{F}_m]$ for all $m\leq n.$
+\end{enumerate}
+\end{defn}
+
+For the rest of the paper, it is assumed that $\mathcal{F}_m = \sigma(M_1, M_2, \dots, M_m).$
+\begin{rem}
+The definition of a \textit{continuous-time} martingale is analogous to the discrete-time martingale, with the distinction that $\bbT = [0,\infty).$
+\end{rem}
+The rest of the paper focuses on a specific example of a continuous-time martingale: Brownian motion.
+
+\section{Brownian Motion}%Hardbook
+We first define Brownian motion and then provide intuition for it.
+\begin{defn}
+A continuous adapted process $B_t$ taking values in $\bbR^d$ is called a \textit{(d-dimensional) Brownian motion} with \textit{drift m} and \textit{variance $\sigma^2$} if, for all $0 = t_0 < t_1< \cdots < t_n,$ we have that
+\begin{enumerate}
+\item $B_0 = 0;$
+\item the distribution of $\{B_{t_{i+1}} - B_{t_i}\}_{i=1}^{n-1}$ is normal with 
+\[B_{t_{i+1}} - B_{t_i} \sim N(m(t-s), \sigma^2(t-s));\]
+\item $B_{t_{i+1}} - B_{t_i}$ is independent of $\mathcal{F}_{t_i}$
+\end{enumerate}
+\end{defn}
+
+\subsection{Drunkard's Walk} %Finbook
+
+To construct a continuous random motion, it is helpful to first construct the discrete case.\newline
+Let $\omega = \omega_1\omega_2\dots$ be an infinite sequence of coin tosses, where tosses happen every $\Delta t$ time increment and and $\omega_n$ is the outcome of the $n$th toss. Let
+\[X_j = \begin{cases}
+1, \qquad \:\:\;\omega_j = H\\
+-1, \qquad \omega_j = T
+\end{cases}\]
+Thus, $\bbP\{X_j = 1\} = \bbP\{X_j = -1\} = \frac{1}{2}.$ Define
+\[M_n:= \sum_{j=1}^nX_j\] We call the stochastic process $M_n$ a \textit{drunkard's walk} or a \textit{symmetric random walk.}\newline
+The following proposition lists the properties of the drunkard's walk which make it a great discrete-time analogy to the Brownian motion.
+
+\begin{prop}
+The drunkard's walk satisfies the following properties:
+\begin{enumerate}
+\item If $0 = k_0 < k_1 < \cdots < k_n$ are integers, then the random variables $\{B_{t_{i+1}} - B_{t_i}\}_{i=1}^{n-1}$ are independent with mean $0$ and variance $k_{i+1} - k_i.$
+\item The drunkard's walk is a martingale.
+\item The quadratic variation of the drunkard's walk is 
+\[[M,M]_k = \sum_{j-1}^k(M_j - M_{j-1})^2 = k\]
+\end{enumerate}
+\end{prop}
+
+\begin{proof} Recall some properties of conditional expectation.
+\begin{enumerate}
+    \item The first proposition is immediate by construction.
+    \item Let $m<n$ be natural numbers, then using \textcolor{red}{place numbers for conditional expectation properties}
+        \begin{align}
+            \bbE[M_n | \mathcal{F}_m] &= \bbE[(M_n - M_m) + M_m | \mathcal{F}_m] \nonumber\\
+            &= \bbE[(M_n - M_m)| \mathcal{F}_m] + \bbE[M_m | \mathcal{F}_m]\nonumber\\
+            &= \bbE[(M_n - M_m)] + M_m = M_m
+        \end{align}
+        Where the equalities in (2.3) hold due to independence, $M_m$ being $\mathcal{F}_m$ measurable, and the first property.
+    \item For any $j,$ $M_j - M_{j-1} = \pm 1,$ and thus $\displaystyle\sum_{j=1}^k (\pm 1)^2 = k.$
+\end{enumerate}
+\end{proof}
+
+\begin{rem} %Shreve
+We can approximate Brownian motion as a limit of the Drunkard's walk where the speed of coin tosses is increased and the step size is decreased, we  define a \textit{scaled random walk} by \[W^{(N)}_{t} = \frac{1}{\sqrt{N}}M_{Nt},\] where $N$ is a fixed integer, $N\Delta t$ is an integer and $\frac{1}{\sqrt{N}}$ is the step size of the walk. \newline 
+We prove a few properties of Proposition 2.2 and leave the rest for the reader to check: 
+\begin{enumerate}
+    \item While the expectation is still obviously $0,$ we need to check the variance. Let $s<t,$ then
+        \[\Var[W^{(N)}_{t} - W^{(N)}_{s}] = \Var[\frac{1}{\sqrt{N}}(M_{Nt} - M_{Ns}] = \frac{1}{N}(\Var[X_1] + \Var[X_2] + \cdots + \Var[X_{t-s}]) = (t-s)\]
+    \item For $t\geq 0$ such that $nt$ is an integer,
+    \[[W^{(N)} W^{(N)}](t) = \sum_{j=1}^{Nt} \left[W^{(N)}\left(\frac{j}{N}\right) - W^{(N)}\left(\frac{j-1}{N}\right)\right]^2 = \sum_{j=1}^{Nt} \left[\frac{1}{\sqrt{N}}X_j\right]^2 = t\]
+\end{enumerate}
+Moreover, we will state, but not prove, one final theorem from \cite{Shreve} for the scaled random walk.
+\begin{thm}
+(\textbf{Central limit}) Let $t\geq 0.$ As $N\to \infty,$ the distribution of the scaled random walk $W^{(n)}(t)$ evaluated at time $t$ converges to the normal distribution with mean zero and variance $t.$
+\end{thm}
+\end{rem}
+
+\subsection{Lévy’s Construction of Brownian Motion}
+To show that there does indeed exist a Brownian motion, we will give the Lévy construction from \cite{SCA}, but we first need a few preliminary definitions.
+
+%Next three are hardbook
+
+\begin{defn}
+We denote the \textit{space of measurable functions} by 
+\[\mathcal{L}^0(\Omega, \mathcal{F}, \mu) = \{f: \Omega \to \bbR | f^{-1}(A) \in \mathcal{F}, A\in \mathcal{B}[0,\infty]\}.\] Where $\mathcal{B}$ denotes the Borel sets. 
+\end{defn}
+
+\begin{defn}
+Let $f \in \mathcal{L}^0(\Omega, \mathcal{F}, \mu)$ and $p\in (0,\infty].$\footnote{Technically, we require a different definition for $p = \infty,$ see \cite{SCA}} We denote the \textit{$L^p$ norm of $f$} by 
+\[\norm{f}_p = \left(\int |f(x)|^p d\mu \right)^\frac{1}{p}.\]
+\end{defn}
+
+\begin{defn}
+For $p<\infty,$ we define $\mathcal{L}^p$
+\[\mathcal{L}^p = \{f\in \mathcal{L}^0(\Omega, \mathcal{F}, \mu) | \norm{f}_p< \infty\}.\] We can then define the \textit{$L^p$ space} as the space of equivalent classes in $\mathcal{L}^p$ under the relation $f = g\; \text{a.e}.$
+\end{defn}
+For $n\in \bbN_0,$ define 
+\[D_n := \{\frac{k}{2^n} | k \in \bbN\},\] $D_0 = \bbN.$ Then we have that $\mathcal{D} = \displaystyle\bigcup_n D_n$ is the set of Dyatic rations. Let $\{Z_m\}_{m\in \mathcal{D}}$ be a collection of random variables such that $Z_m \sim N(0,1),$ and $Z_0 = 0.$
+
+\subsection{Brownian Motion}
+%Nowhere differentiable
+
+
+\section{Stochastic Calculus}
+\subsection{The It\^{o}-Integral}
+\subsection{Quadratic Variation}
+\subsection{It\^{o}-Doeblin Formula}
+\section{Financial Applications}
+\subsection{Girsanov's Theorem}
+\subsection{The Black-Scholes-Merton Equation}
+\section{Appendix}
+\subsection{Proof of Radon-Nikodym Theorem}
+
+\subsection{Levy's Theorem}
+
+
+\begin{thebibliography}{9}
+
+\bibitem{Bass} 
+Richard. F. Bass. 
+Real Analysis for Graduate Students, Second Edition
+https://bass.math.uconn.edu/v43.pdf
+
+\bibitem{IIT}
+Joydeep Dutta.
+Probability and Stochastics for Finance.
+Indian Institute of Technology, Kanpur.
+https://www.youtube.com/@probabilityandstochasticsf5278/videos
+
+\bibitem{Lawler}
+Gregory F. Lawler.
+Stochastic Calculus: An Introduction with
+Applications
+https://www.math.uchicago.edu/~lawler/finbook.pdf
+
+
+\bibitem{SCA}
+Samuel N. Cohen, Robert J. Elliot.
+Stochastic Calculus and Applications, Second Edition.
+Springer, 2015.
+
+\bibitem{Shreve}
+Steven E. Shreve.
+Stochastic Calculus for Finance II, Continuous-Time Models.
+https://files.owenoertell.com/textbooks/finance/stochCal2-shreve.pdf.
+
+\bibitem{Doeblin}
+Bru, B., Yor, M. Comments on the life and mathematical legacy of Wolfgang Doeblin. Finance Stochast 6, 3–47 (2002). https://doi.org/10.1007/s780-002-8399-0
+
+\end{thebibliography}
+
+\end{document}
+
