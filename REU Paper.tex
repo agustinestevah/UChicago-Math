@@ -271,6 +271,7 @@ A \textit{measure} on $(X, \mathcal{F})$ is a function $\mu: \mathcal{F}\to [0,\
 \end{enumerate}
 \end{defn}
 We define a \textit{probability measure} $\bbP$ as a measure on a sample space $\Omega$ of outcomes with the added condition that $\bbP(\Omega) =1.$
+\textcolor{red}{sigma algebra generation}
 
 \begin{defn}
 A \textit{probability space} $(\Omega, \mathcal{F}, \mathbb{P})$ is a triple where $\Omega,$ an arbitrary set, $\mathcal{F}$ is a $\sigma-$algebra of $\Omega$ containing events, and $\mathbb{P}$ is the probability measure on $(\Omega, \mathcal{F}).$
@@ -311,7 +312,7 @@ Suppose we have $(\Omega, \mathcal{F}, \bbP)$ as our probability space, and $\{A
 
 \begin{lem}
 (Borel-Cantelli)
-Let $\{A_n\}$ be a sequence of events. If $\displaystyle\sum_{i=1}^\infty A_i<\infty,$ then $\bbP\{(A_n \; \text{i.o.})\} = 0.$
+Let $\{A_n\}$ be a sequence of events. If $\displaystyle\sum_{n=1}^\infty \bbP\{A_n\}<\infty,$ then $\bbP\{(A_n \; \text{i.o.})\} = 0.$
 \end{lem}
 
 \begin{proof}
@@ -378,14 +379,18 @@ A continuous adapted process $B_t$ taking values in $\bbR^d$ is called a \textit
 
 \subsection{Drunkard's Walk} %Finbook
 
-To construct a continuous random motion, it is helpful to first construct the discrete case.\newline
+To construct a continuous random motion, it is helpful to first construct the discrete case.
+
+
 Let $\omega = \omega_1\omega_2\dots$ be an infinite sequence of coin tosses, where tosses happen every $\Delta t$ time increment and and $\omega_n$ is the outcome of the $n$th toss. Let
 \[X_j = \begin{cases}
 1, \qquad \:\:\;\omega_j = H\\
 -1, \qquad \omega_j = T
 \end{cases}\]
 Thus, $\bbP\{X_j = 1\} = \bbP\{X_j = -1\} = \frac{1}{2}.$ Define
-\[M_n:= \sum_{j=1}^nX_j\] We call the stochastic process $M_n$ a \textit{drunkard's walk} or a \textit{symmetric random walk.}\newline
+\[M_n:= \sum_{j=1}^nX_j\] We call the stochastic process $M_n$ a \textit{drunkard's walk} or a \textit{symmetric random walk.}
+
+
 The following proposition lists the properties of the drunkard's walk which make it a great discrete-time analogy to the Brownian motion.
 
 \begin{prop}
@@ -413,7 +418,9 @@ The drunkard's walk satisfies the following properties:
 \end{proof}
 
 \begin{rem} %Shreve
-We can approximate Brownian motion as a limit of the Drunkard's walk where the speed of coin tosses is increased and the step size is decreased, we  define a \textit{scaled random walk} by \[W^{(N)}_{t} = \frac{1}{\sqrt{N}}M_{Nt},\] where $N$ is a fixed integer, $N\Delta t$ is an integer and $\frac{1}{\sqrt{N}}$ is the step size of the walk. \newline 
+We can approximate Brownian motion as a limit of the Drunkard's walk where the speed of coin tosses is increased and the step size is decreased, we  define a \textit{scaled random walk} by \[W^{(N)}_{t} = \frac{1}{\sqrt{N}}M_{Nt},\] where $N$ is a fixed integer, $N\Delta t$ is an integer and $\frac{1}{\sqrt{N}}$ is the step size of the walk. 
+
+
 We prove a few properties of Proposition 2.2 and leave the rest for the reader to check: 
 \begin{enumerate}
     \item While the expectation is still obviously $0,$ we need to check the variance. Let $s<t,$ then
@@ -446,10 +453,65 @@ Let $f \in \mathcal{L}^0(\Omega, \mathcal{F}, \mu)$ and $p\in (0,\infty].$\footn
 For $p<\infty,$ we define $\mathcal{L}^p$
 \[\mathcal{L}^p = \{f\in \mathcal{L}^0(\Omega, \mathcal{F}, \mu) | \norm{f}_p< \infty\}.\] We can then define the \textit{$L^p$ space} as the space of equivalent classes in $\mathcal{L}^p$ under the relation $f = g\; \text{a.e}.$
 \end{defn}
-For $n\in \bbN_0,$ define 
-\[D_n := \{\frac{k}{2^n} | k \in \bbN\},\] $D_0 = \bbN.$ Then we have that $\mathcal{D} = \displaystyle\bigcup_n D_n$ is the set of Dyatic rations. Let $\{Z_m\}_{m\in \mathcal{D}}$ be a collection of random variables such that $Z_m \sim N(0,1),$ and $Z_0 = 0.$
+
+\begin{lem} %Hardbook
+Let $\{X^n\}_{n\in \bbN}$ be a sequence of a.s. continuous functions which converge unfiromly in probability to a process $X,$ that is, for any $\epsilon>0,$ 
+\[\lim\limits_{n} \bbP\{\lim\sup_{s\in [0,t]} ||X_s^n - X_s||< \epsilon\} =1\] for all $t.$ Then $X$ is also continuous. 
+\end{lem}
+We leave this lemma without proof, but note that for fixed $\omega,$ this is just a classical uniform convergence statement. For fixed $t,$ there exists a sub-sequence in $n$ such that convergence is almost sure. 
+
+For $n\in \bbN_0,$ define \[D_n := \{\frac{k}{2^n} | k \in \bbN\},\] $D_0 = \bbN.$ Then we have that $\mathcal{D} = \displaystyle\bigcup_n D_n$ is the set of Dyatic rations. Let $\{Z_m\}_{m\in \mathcal{D}}$ be a collection of random variables such that $Z_m \sim N(0,1),$ and $Z_0 = 0.$ Determine the value of the $n$th approximation $X_t^n$ on $t\in D_n,$ by defining
+\[X_t^0 = \sum_{k\in D_0: k< t}Z_k.\] For $n>0,$ define $X_t^n = X_t^{n-1}$ for all $t\in D_{n-1}.$ For $t\in D_n\sm D_{n-1},$ let 
+\begin{align}
+X_t^n = X_t^{n-1} + \frac{Z_t}{2^{n+1}} 
+\end{align}
+and use linear interpolation to define $X_t^n$ for all value of $t.$ We can now formally interpolate between $\{X_t^n\}_{t\in D_n}:$
+\[X_t^n = X^n_{\lfloor t\rfloor_n} + \frac{t - \lfloor t\rfloor_n}{\lceil t\rceil_n - \lfloor t\rfloor_n}(X^n_{\lceil t\rceil_n} - X^n_{\lfloor t\rfloor_n})\] where $\lfloor t\rfloor_n$ is the maximum $s\in D_n$ less than $t,$ and $\lceil t\rceil_n$ is defined similarly. 
+
+\begin{thm}
+The processes $X^n$ defined in (2.10) converge, in its natural filtration, a.s. uniformly to a process Brownian motion starting at zero.
+\end{thm}
+\begin{proof}
+First we will show convergence. By construction, we have that 
+\[\sup\limits_{s\in [0,t]}||X_s^n - X_s^{n+1}|| = \max\limits_{s\in \{D_{n+1}\sm D_n | s<t\}}||\frac{Z_s}{2^{(\frac{n}{2} +1)}}||.\] Note that $\{D_{n+1}\sm D_n | s<t\}$ has $t2^n$ elements. Let $F(x):=\bbP\{||Z_s||^2 \leq x\}$ be the distribution function of $||Z_s||^2,$\footnote{It is known that $||Z_s||^2$ has a $\chi^2-$distribution with $d=2,$ and thus $F(x) = 1-e^{\frac{-x}{2}}.$} then
+\textcolor{red}{Ok for me to change to geq?}
+\begin{align*}
+\bbP\{\sup\limits_{s\in [0,t]} ||X_s^n - X_s^{n+1}||\geq\epsilon\} &= \bbP\{\max\limits_{\{D_{n+1}\sm D_n | s<t\}} ||Z_s|| \geq2^{n+1}\epsilon\}\\
+&\leq \sum_{s\in \{D_{n+1}\sm D_n | s<t\}} \bbP\{||Z_s||\geq 2^{n+1}\epsilon\}\\
+&= t2^n(1-F(2^{2n+2}\epsilon^2))\\
+&= t2^n \exp\{-2^{2n+1}\epsilon^2.\}\\
+&\leq te^{-n}<\infty
+\end{align*}
+Where the last inequality stands since as $n\to \infty,$ we can choose $N$ large enough such that $N\ln(2) - 2^{2N+1}\epsilon^2<-N,$ and thus the inequality hold for $n>N.$ Thus, by Borel-Cantelli (Lemma 1.10), we have that 
+\[\bbP\{\sup\limits_{s\in [0,t]} ||X_s^n - X_s^{n+1}||\geq\epsilon\} \; \text{for infinitely many $n$}\}=0.\] Thus, by Lemma 2.9, we have that the processes $X^n$ converges uniformly on the interval $[0,t]$ and thus $X$ is a continuous process.
+
+Now we need to prove that $X$ is a Brownian motion in its natural filtration. For $\lceil s\rceil_n <t,$ $t\in D_n \sm D_{n+1},$ we know that $Z_t$ is independent of $\mathcal{F}_s = \sigma(X_u | u\leq s)$ since $Z_t$ is not involved in the construction of $X_s.$ Thus,
+\[X_t - X_s  = X_t^0 - X_s^0 = \sum_{k\in D_0: s<k<t} \sim N(0,(t-s))\] and $X_t - X_s$ is independent of $\mathcal{F}_s$ by the above logic. If the result holds for $s,t \in D_n,$ then for any $u\in D_{n+1}\sm D_n,$
+\[X_u - X_{\lfloor u\rfloor_n} = \frac{X_{\lceil u \rceil_n}+ X_{\lfloor u \rfloor_n}}{2} + \frac{Z_u}{2^{n+2}} = \frac{2^{-(n+1)}Z_{\lceil u\rceil_n}}{2} + \frac{Z_u}{2^{n+2}}\sim N(0,\frac{1}{2^{n+1}}).\] Similarly, we have that $X_{\lceil u \lceil_n} - X_u\sim N(0,\frac{1}{2^{n+1}}).$ Both intervals are independent of $\mathcal{F}_{\lfloor u\rfloor_n}$ by the above logic. Thus, for all $s,t \in D_{n+1},$
+\[X_t - X_s = (X_t - X_{\lfloor t\rfloor_n}) + (X_{\lfloor t\rfloor_n} - X_{\lceil s\rceil_n}) + (X_{\lceil s\rceil_n} - X_s)\sim N(0,(t-s)).\] The first two terms of the sum are independent of $\mathcal{F}_{\lceil s\rceil_n},$ and thus independent of $\mathcal{F}_s.$ The last is independent of both $\mathcal{F}_{\lfloor s\rfloor_n}$ and 
+$X_{s} - X_{\lfloor s \rfloor_n}.$ To prove it is independent of $\mathcal{F}_s,$ simply write 
+\[\mathcal{F}_s = \mathcal{F}_{\lfloor s\rfloor_n}\vee \sigma(X_s - X_{\lfloor s\rfloor_n}) \vee \sigma(Z_u | u \in (\lfloor s\rfloor_n), s)\] to see that $X_{\lceil s\rceil_n}$ is independent of $\mathcal{F}_s.$ Thus, by inducting, we see that for any $D_n \in \mathcal{D},$ if $s,t \in D_{n+1},$ we have that $X_t - X_s$ is normally distributed and independent of $\mathcal{F}_s.$
+
+Finally, if $s<t,$ we can find sequences $s_n \downarrow s$ and $t_n \uparrow t$ with $s_n, t_n \in D_n$ and $s_k \leq t_k$ for some $k\geq 0.$ Then $X_{t_n} - X_{s_n} \sim N(0, (t_n - s_n))$ and by continuity of $X,$ we have that
+\[X_t - X_s = X_{t_k} - X_{s_k} + \sum_{n = k+1}^\infty (X_{t_n} - X_{t_{n-1}} - X_{s_n} + X_{s_{n-1}})\sim N(0,(t-s)).\] Thus, $X$ is a Brownian motion starting at zero (by construction) in its natural filtration.
+\end{proof}
 
 \subsection{Brownian Motion}
+Having now showed the existence of Brownian motion, we can talk about some of its properties.
+
+\begin{thm}
+Brownian motion is a martingale.
+\end{thm}
+While, the proof of the theorem is identical to its discrete version in Proposition 2.2, this theorem now allows us to talk about some interesting martingale properties which we can now apply to the continuous random motion.
+
+\begin{thm}(Doob's Optional Stopping Theorem) Let $\{\mathcal{F}_n\}_{n \in \bbN}$ be a filtration on $\mathcal{F}$ and $M_n$ be a martingale with respect to $\{\mathcal{F}_n\}.$ If $T$ is a stopping time bounded above by some integer $K,$ then $\bbE[M_n] = \bbE[M_k]$
+\end{thm}
+We prove this in the discrete case, but the proof is analogous to the continuous case.
+
+\begin{proof}
+\end{proof}
+
+
 %Nowhere differentiable
 
 
